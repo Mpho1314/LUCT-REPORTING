@@ -13,7 +13,7 @@ router.put('/:lectureId/feedback', async (req, res) => {
 
     try {
         const query = `
-            UPDATE reports
+            UPDATE reportsgit
             SET prl_feedback = ?, status = 'completed'
             WHERE lecture_id = ?
         `;
