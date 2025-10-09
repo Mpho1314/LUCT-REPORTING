@@ -1,0 +1,81 @@
+.homepage-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.homepage-container {
+  max-width: 800px;
+  padding: 20px;
+  color: #fff;
+}
+
+.homepage-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.homepage-subtitle {
+  font-size: 1.5rem;
+  color: #9fd3ff;
+  margin-bottom: 1.5rem;
+}
+
+.homepage-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.homepage-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  transition: 0.3s ease;
+}
+
+.btn-student {
+  background-color: #007bff;
+}
+
+.btn-lecturer {
+  background-color: #28a745;
+}
+
+.btn-admin {
+  background-color: #6f42c1;
+}
+
+.btn:hover {
+  opacity: 0.85;
+  transform: scale(1.05);
+}
+
+.homepage-footer {
+  position: absolute;
+  bottom: 15px;
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.footer-tagline {
+  font-style: italic;
+  margin-top: 4px;
+}

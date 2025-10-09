@@ -1,0 +1,133 @@
+:root {
+  --primary: #1f1f1f;
+  --secondary: #ffffff;
+  --accent: #b59fff; /* light purple */
+  --card-bg: #2b2b2b;
+  --card-text: #f9f9f9;
+}
+
+body {
+  background-color: var(--primary);
+  color: var(--secondary);
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-container {
+  min-height: 100vh;
+}
+
+/* 🔹 Top Navbar */
+.top-navbar {
+  height: 70px;
+  width: 100%;
+  background-color: var(--card-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  color: var(--secondary);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border-bottom: 3px solid var(--accent);
+}
+
+.top-navbar .navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.top-navbar .navbar-actions button {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-outline-primary { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+.btn-primary { background-color: var(--accent); color: var(--secondary); }
+.btn-outline-info { background: transparent; border: 1px solid #6c757d; color: #6c757d; }
+.btn-info { background-color: #6c757d; color: var(--secondary); }
+.btn-outline-success { background: transparent; border: 1px solid #28a745; color: #28a745; }
+.btn-success { background-color: #28a745; color: var(--secondary); }
+.btn-outline-purple { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+.btn-purple { background-color: var(--accent); color: var(--secondary); }
+.btn-danger { background-color: #dc3545; color: var(--secondary); }
+
+.dashboard-body {
+  padding: 90px 2rem 2rem 2rem;
+}
+
+/* Dashboard grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Cards */
+.dashboard-card {
+  background-color: var(--card-bg);
+  color: var(--card-text);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+/* Monitoring table */
+.monitoring-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.monitoring-table th,
+.monitoring-table td {
+  border: 1px solid var(--secondary);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.monitoring-table th {
+  background-color: var(--accent);
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  color: var(--card-text);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 500px;
+}
+
+/* Card actions */
+.card-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Input + button flex */
+.mb-2.d-flex {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}

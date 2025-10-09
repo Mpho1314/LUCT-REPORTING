@@ -1,0 +1,238 @@
+/* === Global Dashboard Styles === */
+.dashboard-container {
+  background-color: #f3f3f5; /* Light grey background */
+  color: #222;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* === Top Navbar === */
+.top-navbar {
+  height: 70px;
+  width: 100%;
+  background: linear-gradient(90deg, #000, #3b2f4a); /* Black → Light purple tint */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border-bottom: 2px solid #b89fe1; /* Soft purple accent */
+}
+
+.top-navbar .navbar-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #e0d8f7;
+}
+
+.navbar-actions button {
+  margin-left: 10px;
+  background-color: #3b2f4a;
+  color: #fff;
+  border: 1px solid #b89fe1;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.navbar-actions button:hover {
+  background-color: #b89fe1;
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* === Dashboard Body === */
+.dashboard-body {
+  padding: 90px 2rem 2rem 2rem;
+  background-color: #f7f7fa; /* Soft grey */
+}
+
+/* === Dashboard Sections === */
+.dashboard-section {
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.dashboard-section h2 {
+  color: #3b2f4a;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #b89fe1;
+  padding-bottom: 0.5rem;
+}
+
+/* === Search Bar === */
+.dashboard-section input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: 100%;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.dashboard-section input[type="text"]:focus {
+  border-color: #b89fe1;
+  box-shadow: 0 0 4px #b89fe1;
+}
+
+/* === Dashboard Grid === */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.5rem;
+}
+
+/* === Cards === */
+.dashboard-card {
+  background-color: #fff;
+  padding: 1.2rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(59, 47, 74, 0.2);
+}
+
+.dashboard-card h3 {
+  color: #3b2f4a;
+  font-weight: 600;
+}
+
+.dashboard-card p {
+  margin: 0.4rem 0;
+  color: #555;
+}
+
+/* === Buttons inside cards (like Rating) === */
+.dashboard-card button {
+  background-color: #b89fe1;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  color: #000;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dashboard-card button:hover {
+  background-color: #3b2f4a;
+  color: #fff;
+}
+
+/* === Alerts === */
+.alert-danger {
+  background-color: #fbeaea;
+  color: #a33;
+  border: 1px solid #e0a0a0;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+/* === Loading Spinner === */
+.loading-spinner {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #3b2f4a;
+  margin-top: 2rem;
+}
+/* === Monitoring Table === */
+.monitoring-section {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.monitoring-table-container {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.monitoring-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: #fdfdff;
+}
+
+.monitoring-table th,
+.monitoring-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.monitoring-table th {
+  background-color: #3b2f4a; /* deep purple header */
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03rem;
+}
+
+.monitoring-table tr:nth-child(even) {
+  background-color: #f3f3f5;
+}
+
+.monitoring-table tr:hover {
+  background-color: #ece3f8;
+  transition: background 0.3s ease;
+}
+
+.monitoring-table td {
+  color: #333;
+}
+
+.monitoring-table td:first-child {
+  font-weight: 500;
+  color: #3b2f4a;
+}
+/* StudentDashboard.css */
+
+.student-dashboard {
+  height: 100vh; /* full screen height */
+  width: 100%;
+  background-image: url('../assets/images/Student.jpeg.jpg'); /* update path as needed */
+  background-size: cover; /* makes image fill the screen */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* keeps image static when scrolling */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white; /* text color for contrast */
+}
+
+/* Optional overlay to improve text readability */
+.student-dashboard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 0, 40, 0.4); /* subtle purple tint overlay */
+  z-index: 0;
+}
+
+/* Ensure dashboard content appears above overlay */
+.student-dashboard > * {
+  position: relative;
+  z-index: 1;
+}
+

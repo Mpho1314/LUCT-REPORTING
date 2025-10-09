@@ -1,0 +1,172 @@
+/* Body and overall layout */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+}
+
+/* 🔹 Top Navbar */
+.top-navbar {
+  height: 70px;
+  width: 100%;
+  background-color: #6f42c1; /* purple shade for PRL */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border-bottom: 3px solid #563d7c;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.top-navbar .navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.top-navbar .navbar-actions button {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  margin-left: 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #9b59b6;
+  color: white;
+  transition: background 0.2s;
+}
+
+.top-navbar .navbar-actions button:hover {
+  background-color: #8e44ad;
+}
+
+/* Push content below navbar */
+.dashboard-body {
+  padding: 90px 20px 20px 20px;
+}
+
+/* Grid layout for cards */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Card styling */
+.dashboard-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 15px 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  color: #333333;
+  overflow-wrap: break-word; /* prevent text overflow */
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.dashboard-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+.dashboard-card p {
+  font-size: 0.95rem;
+  margin: 4px 0;
+  color: #4d4d4d;
+}
+
+/* Card actions */
+.card-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Buttons inside cards */
+.dashboard-card button {
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dashboard-card .btn-primary {
+  background-color: #6f42c1;
+  color: white;
+}
+
+.dashboard-card .btn-primary:hover {
+  background-color: #563d7c;
+}
+
+.dashboard-card .btn-secondary {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.dashboard-card .btn-secondary:hover {
+  background-color: #7f8c8d;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  color: #2c3e50;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+}
+
+.modal-content p {
+  margin: 6px 0;
+  font-size: 1rem;
+}
+
+/* Form inputs inside modal */
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.modal-content button {
+  padding: 8px 14px;
+  margin-top: 10px
+}

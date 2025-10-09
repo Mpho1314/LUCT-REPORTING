@@ -1,0 +1,172 @@
+mysql> use reporting_system;
+Database changed
+mysql> show tables;
++----------------------------+
+| Tables_in_reporting_system |
++----------------------------+
+| courses                    |
+| lectures                   |
+| ratings                    |
+| reports                    |
+| users                      |
++----------------------------+
+5 rows in set (0.04 sec)
+
+mysql> desc ratings;
++------------+-----------+------+-----+-------------------+-------------------+
+| Field      | Type      | Null | Key | Default           | Extra             |
++------------+-----------+------+-----+-------------------+-------------------+
+| id         | int       | NO   | PRI | NULL              | auto_increment    |
+| lecture_id | int       | NO   | MUL | NULL              |                   |
+| student_id | int       | NO   | MUL | NULL              |                   |
+| rating     | tinyint   | NO   |     | NULL              |                   |
+| comment    | text      | YES  |     | NULL              |                   |
+| created_at | timestamp | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++------------+-----------+------+-----+-------------------+-------------------+
+6 rows in set (0.01 sec)
+
+mysql> desc courses;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int          | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(100) | NO   |     | NULL    |                |
+| code        | varchar(20)  | NO   |     | NULL    |                |
+| faculty     | varchar(50)  | NO   |     | NULL    |                |
+| lecturer_id | int          | YES  | MUL | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc lectures;
++---------------------+--------------+------+-----+---------+----------------+
+| Field               | Type         | Null | Key | Default | Extra          |
++---------------------+--------------+------+-----+---------+----------------+
+| id                  | int          | NO   | PRI | NULL    | auto_increment |
+| faculty_name        | varchar(100) | NO   |     | NULL    |                |
+| class_name          | varchar(100) | NO   |     | NULL    |                |
+| course_id           | int          | NO   | MUL | NULL    |                |
+| lecturer_id         | int          | NO   | MUL | NULL    |                |
+| date                | date         | NO   |     | NULL    |                |
+| scheduled_time      | time         | NO   |     | NULL    |                |
+| course_code         | varchar(50)  | YES  |     | NULL    |                |
+| week                | int          | NO   |     | NULL    |                |
+| topic               | varchar(255) | YES  |     | NULL    |                |
+| outcomes            | text         | YES  |     | NULL    |                |
+| students_present    | int          | YES  |     | NULL    |                |
+| students_registered | int          | YES  |     | NULL    |                |
+| attendance          | varchar(50)  | YES  |     | NULL    |                |
+| venue               | varchar(100) | YES  |     | NULL    |                |
+| recommendations     | text         | YES  |     | NULL    |                |
++---------------------+--------------+------+-----+---------+----------------+
+16 rows in set (0.01 sec)
+
+mysql> desc reports;
++--------------+------+------+-----+---------+----------------+
+| Field        | Type | Null | Key | Default | Extra          |
++--------------+------+------+-----+---------+----------------+
+| id           | int  | NO   | PRI | NULL    | auto_increment |
+| lecture_id   | int  | NO   | MUL | NULL    |                |
+| prl_feedback | text | YES  |     | NULL    |                |
++--------------+------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> desc users;
++----------+---------------------------------------+------+-----+---------+----------------+
+| Field    | Type                                  | Null | Key | Default | Extra          |
++----------+---------------------------------------+------+-----+---------+----------------+
+| id       | int                                   | NO   | PRI | NULL    | auto_increment |
+| username | varchar(50)                           | NO   | UNI | NULL    |                |
+| password | varchar(255)                          | NO   |     | NULL    |                |
+| role     | enum('student','lecturer','PRL','PL') | NO   |     | NULL    |                |
++----------+---------------------------------------+------+-----+---------+----------------+
+
+
+
+
+
+
+4 rows in set (0.01 sec)
+
+
+
+
+
+
+
+
+
+
+
+-- Create Database
+CREATE DATABASE IF NOT EXISTS reporting_system;
+USE reporting_system;
+
+-- ==========================
+-- Users Table
+-- ==========================
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('student', 'lecturer', 'PRL', 'PL') NOT NULL
+);
+
+-- ==========================
+-- Courses Table
+-- ==========================
+CREATE TABLE courses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    code VARCHAR(20) NOT NULL,
+    faculty VARCHAR(50) NOT NULL,
+    lecturer_id INT,
+    FOREIGN KEY (lecturer_id) REFERENCES users(id)
+);
+
+-- ==========================
+-- Lectures Table
+-- ==========================
+CREATE TABLE lectures (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    faculty_name VARCHAR(100) NOT NULL,
+    class_name VARCHAR(100) NOT NULL,
+    course_id INT NOT NULL,
+    lecturer_id INT NOT NULL,
+    date DATE NOT NULL,
+    scheduled_time TIME NOT NULL,
+    course_code VARCHAR(50),
+    week INT NOT NULL,
+    topic VARCHAR(255),
+    outcomes TEXT,
+    students_present INT,
+    students_registered INT,
+    attendance VARCHAR(50),
+    venue VARCHAR(100),
+    recommendations TEXT,
+    FOREIGN KEY (course_id) REFERENCES courses(id),
+    FOREIGN KEY (lecturer_id) REFERENCES users(id)
+);
+
+-- ==========================
+-- Ratings Table
+-- ==========================
+CREATE TABLE ratings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    lecture_id INT NOT NULL,
+    student_id INT NOT NULL,
+    rating TINYINT NOT NULL,
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (lecture_id) REFERENCES lectures(id),
+    FOREIGN KEY (student_id) REFERENCES users(id)
+);
+
+-- ==========================
+-- Reports Table
+-- ==========================
+CREATE TABLE reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    lecture_id INT NOT NULL,
+    prl_feedback TEXT,
+    FOREIGN KEY (lecture_id) REFERENCES lectures(id)
+);
