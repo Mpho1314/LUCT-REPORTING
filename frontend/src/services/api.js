@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Base URL for backend
 const API_URL = 'https://luct-reporting-dkk1.onrender.com';
 
 // Create axios instance with base configuration
@@ -22,49 +23,47 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Auth services
+// ✅ Auth services
 export const authService = {
   login: (credentials) => api.post('/api/auth/login', credentials),
   register: (userData) => api.post('/api/auth/register', userData),
   getCurrentUser: () => JSON.parse(localStorage.getItem('user')),
 };
 
-
-// Lecture services
+// ✅ Lecture services
 export const lectureService = {
-  getLectures: () => api.get('/lectures'),
-  getLectureById: (id) => api.get(`/lectures/${id}`),
-  getLecturesByCourse: (courseId) => api.get(`/lectures/course/${courseId}`),
-  createLecture: (lectureData) => api.post('/lectures', lectureData),
-  updateLecture: (id, lectureData) => api.put(`/lectures/${id}`, lectureData),
-  deleteLecture: (id) => api.delete(`/lectures/${id}`),
-  getAverageRating: (lectureId) => api.get(`/ratings/${lectureId}/average`),
+  getLectures: () => api.get('/api/lectures'),
+  getLectureById: (id) => api.get(`/api/lectures/id/${id}`),
+  getLecturesByCourse: (courseId) => api.get(`/api/lectures/course/${courseId}`),
+  createLecture: (lectureData) => api.post('/api/lectures', lectureData),
+  updateLecture: (id, lectureData) => api.put(`/api/lectures/${id}`, lectureData),
+  deleteLecture: (id) => api.delete(`/api/lectures/${id}`),
 };
 
-// Rating services
+// ✅ Rating services
 export const ratingService = {
-  submitRating: (ratingData) => api.post('/ratings', ratingData),
-  getRatingsByLecture: (lectureId) => api.get(`/ratings/${lectureId}`),
-  getAverageRating: (lectureId) => api.get(`/ratings/${lectureId}/average`),
+  submitRating: (ratingData) => api.post('/api/ratings', ratingData),
+  getRatingsByLecture: (lectureId) => api.get(`/api/ratings/lecture/${lectureId}`),
+  getAverageRating: (lectureId) => api.get(`/api/ratings/lecture/${lectureId}/average`),
 };
 
-// Course services
+// ✅ Course services
 export const courseService = {
-  getCourses: () => api.get('/courses'),
-  getCourseById: (id) => api.get(`/courses/${id}`),
-  createCourse: (courseData) => api.post('/courses', courseData),
-  updateCourse: (id, courseData) => api.put(`/courses/${id}`, courseData),
-  deleteCourse: (id) => api.delete(`/courses/${id}`),
+  getCourses: () => api.get('/api/courses'),
+  getCourseById: (id) => api.get(`/api/courses/${id}`),
+  createCourse: (courseData) => api.post('/api/courses', courseData),
+  updateCourse: (id, courseData) => api.put(`/api/courses/${id}`, courseData),
+  deleteCourse: (id) => api.delete(`/api/courses/${id}`),
 };
 
-// Report services
+// ✅ Report services
 export const reportService = {
-  getReports: () => api.get('/reports'),
-  getReportById: (id) => api.get(`/reports/${id}`),
-  createReport: (reportData) => api.post('/reports', reportData),
-  updateReport: (id, reportData) => api.put(`/reports/${id}`, reportData),
-  deleteReport: (id) => api.delete(`/reports/${id}`),
+  getReports: () => api.get('/api/reports'),
+  getReportById: (id) => api.get(`/api/reports/${id}`),
+  createReport: (reportData) => api.post('/api/reports', reportData),
+  updateReport: (id, reportData) => api.put(`/api/reports/${id}`, reportData),
+  deleteReport: (id) => api.delete(`/api/reports/${id}`),
 
-  // ✅ PRL adds feedback for a lecture
-  addPRLFeedback: (lectureId, data) => api.put(`/reports/${lectureId}/feedback`, data),
+  // PRL adds feedback for a lecture
+  addPRLFeedback: (lectureId, data) => api.put(`/api/reports/${lectureId}/feedback`, data),
 };
