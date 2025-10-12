@@ -1,0 +1,102 @@
+-- Schema for the LUCT Reporting System
+-- Tables to be created in the existing database assigned to user 'sql3802082'
+
+-- Drop existing tables if they exist (optional, use with caution)
+DROP TABLE IF EXISTS reports, ratings, monitoring_logs, lectures, classes, courses, users;
+
+-- Table: users
+CREATE TABLE users (
+    id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('student', 'lecturer', 'PRL', 'PL') NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY (username)
+) ENGINE=InnoDB;
+
+-- Table: courses
+CREATE TABLE courses (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    code VARCHAR(20) NOT NULL,
+    faculty VARCHAR(50) NOT NULL,
+    lecturer_id INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (lecturer_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- Table: classes
+CREATE TABLE classes (
+    id INT NOT NULL AUTO_INCREMENT,
+    course_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    venue VARCHAR(100),
+    scheduled_time TIME,
+    lecturer_id INT,
+    total_students INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+    FOREIGN KEY (lecturer_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- Table: lectures
+CREATE TABLE lectures (
+    id INT NOT NULL AUTO_INCREMENT,
+    faculty_name VARCHAR(100) NOT NULL,
+    class_name VARCHAR(100) NOT NULL,
+    course_id INT NOT NULL,
+    lecturer_id INT NOT NULL,
+    date DATE NOT NULL,
+    scheduled_time TIME NOT NULL,
+    course_code VARCHAR(50),
+    week INT NOT NULL,
+    topic VARCHAR(255),
+    outcomes TEXT,
+    students_present INT,
+    students_registered INT,
+    attendance VARCHAR(50),
+    venue VARCHAR(100),
+    recommendations TEXT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+    FOREIGN KEY (lecturer_id) REFERENCES users(id) ON DELETE RESTRICT
+) ENGINE=InnoDB;
+
+-- Table: ratings
+CREATE TABLE ratings (
+    id INT NOT NULL AUTO_INCREMENT,
+    lecture_id INT NOT NULL,
+    student_id INT NOT NULL,
+    rating TINYINT NOT NULL,
+    comment TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    rater_role ENUM('student', 'lecturer', 'PRL', 'PL') NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
+    FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- Table: monitoring_logs
+CREATE TABLE monitoring_logs (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    action VARCHAR(100) NOT NULL,
+    target_id INT,
+    target_type VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- Table: reports
+CREATE TABLE reports (
+    id INT NOT NULL AUTO_INCREMENT,
+    lecture_id INT NOT NULL,
+    prl_feedback TEXT,
+    status ENUM('pending', 'completed') DEFAULT 'pending',
+    prl_id INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (lecture_id) REFERENCES lectures(id) ON DELETE CASCADE,
+    FOREIGN KEY (prl_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
