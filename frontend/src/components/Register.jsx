@@ -20,32 +20,35 @@ function Register() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError("");
 
-    // Validate passwords match
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      setLoading(false);
-      return;
-    }
+  if (formData.password !== formData.confirmPassword) {
+    setError("Passwords do not match");
+    setLoading(false);
+    return;
+  }
 
-    try {
-      // Remove confirmPassword before sending to API
-      const { confirmPassword, ...registerData } = formData;
-      const response = await authService.register(registerData);
-      
-      // Redirect to login page on successful registration
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.error || "Registration failed. Please try again.");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const { confirmPassword, fullName, ...rest } = formData;
+
+    const registerData = {
+      ...rest,
+      full_name: fullName // <-- match backend
+    };
+
+    await authService.register(registerData);
+    navigate("/");
+  } catch (err) {
+    setError(err.response?.data?.error || "Registration failed. Please try again.");
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="auth-container">
