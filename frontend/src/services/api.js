@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://reporting-system-5.onrender.com';
+const API_URL = 'https://luct-reporting-dkk1.onrender.com';
 
 // Create axios instance with base configuration
 const api = axios.create({
