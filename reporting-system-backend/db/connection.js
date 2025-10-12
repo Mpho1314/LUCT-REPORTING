@@ -8,7 +8,7 @@ const connection = mysql.createPool({
   database: process.env.DB_NAME,
   port: process.env.DB_PORT || 25838,
   ssl: {
-    rejectUnauthorized: true, // ✅ Required by Aiven
+    rejectUnauthorized: false, // ✅ Required by Aiven
   },
 });
 
