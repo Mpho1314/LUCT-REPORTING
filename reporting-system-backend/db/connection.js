@@ -5,7 +5,20 @@ const connection = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306,
+  ssl: {
+    rejectUnauthorized: true, // ✅ Required by Aiven
+  },
+});
+
+connection.getConnection((err, conn) => {
+  if (err) {
+    console.error('❌ MySQL connection failed:', err.message);
+  } else {
+    console.log('✅ Connected to MySQL database!');
+    conn.release();
+  }
 });
 
 module.exports = connection;
