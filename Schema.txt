@@ -1,5 +1,5 @@
 -- Schema for the LUCT Reporting System
--- Tables to be created in the existing database assigned to user 'sql3802082'
+-- Tables to be created in the existing database assigned to user 'defaultdb'
 
 -- Drop existing tables if they exist (optional, use with caution)
 DROP TABLE IF EXISTS reports, ratings, monitoring_logs, lectures, classes, courses, users;
