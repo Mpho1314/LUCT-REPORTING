@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://reporting-system-5.onrender.com/api/reports";
+const API_URL = "https://luct-reporting-dkk1.onrender.com/api/reports";
 
 export const reportService = {
   // Get all reports
