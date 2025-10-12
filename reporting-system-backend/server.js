@@ -1,28 +1,33 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
+require('dotenv').config(); // Load environment variables
 
+// Import routes
 const authRoutes = require('./routes/auth');
 const lectureRoutes = require('./routes/lectures');
 const courseRoutes = require('./routes/courses');
 const reportRoutes = require('./routes/reports');
-const ratingsRouter = require("./routes/ratings");
+const ratingsRouter = require('./routes/ratings');
 
 const app = express();
-app.use(cors({
-  origin: 'https://luct-reporting-system.vercel.app', // replace with your actual Vercel URL
-  credentials: true
-}));
 
+// Middleware
 app.use(express.json());
 
-// ✅ API routes
+// ✅ CORS config for frontend
+app.use(cors({
+    origin: process.env.FRONTEND_URL, // e.g., https://luct-reporting-system.vercel.app
+    credentials: true
+}));
+
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/lectures', lectureRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/reports', reportRoutes);
-app.use("/api/ratings", ratingsRouter);
+app.use('/api/ratings', ratingsRouter);
 
-// ✅ Start server
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
