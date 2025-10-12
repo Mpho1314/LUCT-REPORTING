@@ -24,10 +24,11 @@ api.interceptors.request.use(
 
 // Auth services
 export const authService = {
-  login: (credentials) => api.post('/auth/login', credentials),
-  register: (userData) => api.post('/auth/register', userData),
+  login: (credentials) => api.post('/api/auth/login', credentials),
+  register: (userData) => api.post('/api/auth/register', userData),
   getCurrentUser: () => JSON.parse(localStorage.getItem('user')),
 };
+
 
 // Lecture services
 export const lectureService = {
