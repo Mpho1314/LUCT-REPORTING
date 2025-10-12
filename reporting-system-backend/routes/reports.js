@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db/connection'); // ✅ DB connection
+const API_URL = process.env.REACT_APP_API_URL;
 
 // ✅ PRL adds feedback for a lecture
 router.put('/:lectureId/feedback', async (req, res) => {
