@@ -16,10 +16,24 @@ const app = express();
 app.use(express.json());
 
 // ✅ CORS config for frontend
+const allowedOrigins = [
+  'https://luct-reporting-u5ik.vercel.app', // your current frontend
+  'https://luct-reporting-git-main-mpho-esther-qabas-projects.vercel.app' // optional: old frontend
+];
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // e.g., https://luct-reporting-system.vercel.app
-    credentials: true
+  origin: function(origin, callback){
+    // allow requests with no origin (like Postman)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
 }));
+
 
 // API routes
 app.use('/api/auth', authRoutes);
