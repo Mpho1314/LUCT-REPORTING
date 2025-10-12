@@ -6,11 +6,10 @@ const connection = mysql.createPool({
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306,
+  port: process.env.DB_PORT || 25838,
   ssl: {
     rejectUnauthorized: true, // ✅ Required by Aiven
   },
-  port: process.env.DB_PORT || 25838
 });
 
 connection.getConnection((err, conn) => {
