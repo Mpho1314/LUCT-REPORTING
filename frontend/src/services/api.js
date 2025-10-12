@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-// Base URL for backend
 const API_URL = 'https://luct-reporting-dkk1.onrender.com';
 
-// Create axios instance with base configuration
+// Create axios instance
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -11,7 +10,7 @@ const api = axios.create({
   },
 });
 
-// Add request interceptor to include auth token
+// Include JWT token automatically
 api.interceptors.request.use(
   (config) => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -63,7 +62,5 @@ export const reportService = {
   createReport: (reportData) => api.post('/api/reports', reportData),
   updateReport: (id, reportData) => api.put(`/api/reports/${id}`, reportData),
   deleteReport: (id) => api.delete(`/api/reports/${id}`),
-
-  // PRL adds feedback for a lecture
   addPRLFeedback: (lectureId, data) => api.put(`/api/reports/${lectureId}/feedback`, data),
 };
