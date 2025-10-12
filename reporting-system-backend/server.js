@@ -9,7 +9,11 @@ const reportRoutes = require('./routes/reports');
 const ratingsRouter = require("./routes/ratings");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://luct-reporting-system.vercel.app', // replace with your actual Vercel URL
+  credentials: true
+}));
+
 app.use(express.json());
 
 // ✅ API routes
