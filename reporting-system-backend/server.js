@@ -44,4 +44,9 @@ app.use('/api/ratings', ratingsRouter);
 
 // Start server
 const PORT = process.env.PORT || 5000;
+// ✅ Test root route to verify backend is alive
+app.get('/', (req, res) => {
+  res.send('LUCT Reporting API is running ✅');
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
