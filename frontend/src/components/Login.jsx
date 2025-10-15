@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { authService } from "../services/api";
 import "../styles/Auth.css";
-
-const API_BASE_URL = "https://luct-reporting-dkk1.onrender.com/api";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -17,32 +16,10 @@ function Login() {
     setError("");
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.message || "Login failed. Please check your credentials.");
-        return;
-      }
-
-      // Store user info + JWT in localStorage
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          id: data.id,
-          username: data.username,
-          token: data.token,
-          role: data.role || "lecturer", // fallback role if backend doesn't send it
-        })
-      );
+      const data = await authService.login({ username, password });
 
       // Redirect based on role
-      switch ((data.role || "lecturer").toLowerCase()) {
+      switch ((data.role || "student").toLowerCase()) {
         case "lecturer":
           navigate("/lecturer");
           break;
@@ -59,8 +36,8 @@ function Login() {
           navigate("/");
       }
     } catch (err) {
+      setError(err.message || "Login failed. Check your credentials.");
       console.error("Login error:", err);
-      setError("Server error. Please try again later.");
     } finally {
       setLoading(false);
     }
