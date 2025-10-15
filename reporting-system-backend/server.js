@@ -49,4 +49,17 @@ app.get('/', (req, res) => {
   res.send('LUCT Reporting API is running ✅');
 });
 
+// server.js (add this ABOVE app.listen)
+app.get('/api/test-db', async (req, res) => {
+  try {
+    // Simple query to check database connection
+    const [rows] = await db.query('SELECT 1 + 1 AS result');
+    res.json({ message: 'Backend and DB are working!', result: rows[0].result });
+  } catch (error) {
+    console.error('DB test error:', error);
+    res.status(500).json({ message: 'DB connection failed' });
+  }
+});
+
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
