@@ -24,9 +24,37 @@ api.interceptors.request.use(
 
 // ✅ Auth services
 export const authService = {
-  login: (credentials) => api.post('/api/auth/login', credentials),
-  register: (userData) => api.post('/api/auth/register', userData),
-  getCurrentUser: () => JSON.parse(localStorage.getItem('user')),
+  login: async (credentials) => {
+    const response = await api.post('/api/auth/login', credentials);
+    const data = response.data;
+
+    // Store user in localStorage
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        id: data.id,
+        username: data.username,
+        token: data.token,
+        role: data.role || 'student',
+      })
+    );
+
+    return data;
+  },
+
+  register: async (userData) => {
+    const response = await api.post('/api/auth/register', userData);
+    return response.data;
+  },
+
+  logout: () => {
+    localStorage.removeItem('user');
+  },
+
+  getCurrentUser: () => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  },
 };
 
 // ✅ Lecture services
