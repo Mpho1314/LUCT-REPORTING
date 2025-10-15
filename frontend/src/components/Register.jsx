@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { authService } from "../services/api";
 import "../styles/Auth.css";
-
-const API_BASE_URL = "https://luct-reporting-dkk1.onrender.com/api";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -33,60 +32,22 @@ function Register() {
     }
 
     try {
-      // Prepare payload
-      const payload = {
+      // Send register request
+      await authService.register({
         username: formData.username,
         password: formData.password,
-        full_name: formData.fullName, // match backend field if needed
-        role: formData.role, // optional, depends if backend stores it
-      };
-
-      // Register user
-      const registerRes = await fetch(`${API_BASE_URL}/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        full_name: formData.fullName,
+        role: formData.role,
       });
-
-      const registerData = await registerRes.json();
-
-      if (!registerRes.ok) {
-        setError(registerData.message || "Registration failed.");
-        setLoading(false);
-        return;
-      }
 
       // Auto-login after successful registration
-      const loginRes = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password,
-        }),
+      await authService.login({
+        username: formData.username,
+        password: formData.password,
       });
 
-      const loginData = await loginRes.json();
-
-      if (!loginRes.ok) {
-        setError(loginData.message || "Login failed after registration.");
-        setLoading(false);
-        return;
-      }
-
-      // Save JWT + user info
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          id: loginData.id,
-          username: loginData.username,
-          token: loginData.token,
-          role: loginData.role || formData.role,
-        })
-      );
-
       // Redirect based on role
-      switch ((loginData.role || formData.role).toLowerCase()) {
+      switch (formData.role.toLowerCase()) {
         case "lecturer":
           navigate("/lecturer");
           break;
@@ -103,8 +64,8 @@ function Register() {
           navigate("/");
       }
     } catch (err) {
+      setError(err.message || "Registration failed. Please try again.");
       console.error("Registration error:", err);
-      setError("Server error. Please try again later.");
     } finally {
       setLoading(false);
     }
