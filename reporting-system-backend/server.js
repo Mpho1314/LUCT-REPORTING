@@ -61,5 +61,16 @@ app.get('/api/test-db', async (req, res) => {
   }
 });
 
+app.get('/api/test-db', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT 1 + 1 AS result');
+    res.json({ message: 'Backend and DB are working!', result: rows[0].result });
+  } catch (error) {
+    console.error('DB test error:', error);
+    res.status(500).json({ message: 'DB connection failed', error: error.message });
+  }
+});
+
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
