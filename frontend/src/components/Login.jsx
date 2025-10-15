@@ -4,7 +4,7 @@ import { authService } from "../services/api";
 import "../styles/Auth.css";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -16,10 +16,22 @@ function Login() {
     setError("");
 
     try {
-      const data = await authService.login({ username, password });
+      const response = await authService.login({ email, password });
+      const data = response.data;
+
+      // Store user info
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: data.id,
+          token: data.token,
+          email: data.email,
+          role: data.role,
+        })
+      );
 
       // Redirect based on role
-      switch ((data.role || "student").toLowerCase()) {
+      switch (data.role.toLowerCase()) {
         case "lecturer":
           navigate("/lecturer");
           break;
@@ -36,7 +48,9 @@ function Login() {
           navigate("/");
       }
     } catch (err) {
-      setError(err.message || "Login failed. Check your credentials.");
+      setError(
+        err.response?.data?.message || "Login failed. Please check your credentials."
+      );
       console.error("Login error:", err);
     } finally {
       setLoading(false);
@@ -55,13 +69,13 @@ function Login() {
 
         <form onSubmit={handleLogin} className="auth-form">
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
-              id="username"
+              type="email"
+              id="email"
               className="form-control"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
