@@ -5,12 +5,13 @@ import "../styles/Auth.css";
 
 function Register() {
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
     confirmPassword: "",
     fullName: "",
-    role: "student", // Default role
+    role: "student", // default role
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -32,39 +33,19 @@ function Register() {
     }
 
     try {
-      // Send register request
-      await authService.register({
-        username: formData.username,
-        password: formData.password,
-        full_name: formData.fullName,
-        role: formData.role,
-      });
+      const { confirmPassword, fullName, ...rest } = formData;
 
-      // Auto-login after successful registration
-      await authService.login({
-        username: formData.username,
-        password: formData.password,
-      });
+      const registerData = {
+        ...rest,
+        full_name: fullName, // match backend
+      };
 
-      // Redirect based on role
-      switch (formData.role.toLowerCase()) {
-        case "lecturer":
-          navigate("/lecturer");
-          break;
-        case "prl":
-          navigate("/prl");
-          break;
-        case "pl":
-          navigate("/pl");
-          break;
-        case "student":
-          navigate("/student");
-          break;
-        default:
-          navigate("/");
-      }
+      await authService.register(registerData);
+      navigate("/login");
     } catch (err) {
-      setError(err.message || "Registration failed. Please try again.");
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
       console.error("Registration error:", err);
     } finally {
       setLoading(false);
@@ -96,13 +77,13 @@ function Register() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
-              id="username"
-              name="username"
+              type="email"
+              id="email"
+              name="email"
               className="form-control"
-              value={formData.username}
+              value={formData.email}
               onChange={handleChange}
               required
             />
@@ -162,7 +143,7 @@ function Register() {
 
         <div className="auth-footer">
           <p>
-            Already have an account? <Link to="/">Sign In</Link>
+            Already have an account? <Link to="/login">Sign In</Link>
           </p>
         </div>
       </div>
